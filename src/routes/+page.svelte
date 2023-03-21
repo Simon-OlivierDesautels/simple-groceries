@@ -1,59 +1,28 @@
 <script>
-	import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
+	import { dummyRecipes } from '$lib/helpers/dummyData';
+
+	export let data;
+	let recipes = dummyRecipes.results;
+	console.log(recipes);
 </script>
 
-<svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
-</svelte:head>
-
-<section>
-	<h1>
-		<span class="welcome">
-			<picture>
-				<source srcset={welcome} type="image/webp" />
-				<img src={welcome_fallback} alt="Welcome" />
-			</picture>
-		</span>
-
-		to your new<br />SvelteKit app
-	</h1>
-
-	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
-	</h2>
-
-	<Counter />
-</section>
-
-<style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 0.6;
-	}
-
-	h1 {
-		width: 100%;
-	}
-
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
-	}
-</style>
+<ul class="flex flex-col gap-4">
+	{#each recipes as recipe}
+		<li class="flex flex-col border-b-2 border-l-neutral-200 py-4 px-2">
+			<span class="flex items-end gap-4 pb-4">
+				<img class="aspect-square w-24 rounded-sm object-cover" src={recipe.image} alt="" />
+				<span class="flex w-full flex-col gap-2">
+					<p class="text text-right">{recipe.title}</p>
+					<span class="ml-auto flex gap-4">
+						<a
+							href={`recipe/${recipe.id}`}
+							alt={`${recipe.title}`}
+							class="_btn _btn--secondary ml-auto">See recipe</a
+						>
+						<button class="_btn ml-auto">Add</button>
+					</span>
+				</span>
+			</span>
+		</li>
+	{/each}
+</ul>
