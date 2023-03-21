@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+._btn {
+    padding: 4px 16px;
+    border-radius: 4px;
+    background-color: #409862;
+    color: white;
+}
+
+._btn--secondary {
+    background-color: #458FD3;
+}
