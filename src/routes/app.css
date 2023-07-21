@@ -2,46 +2,95 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-h1, h2, h3,h4, h5, h6{
-    font-family: 'Inria Serif', serif;
-    font-weight: bold;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: 'Inria Serif', serif;
+	font-weight: bold;
 }
 
 ul {
-    color: rgb(121, 121, 121);
+	color: rgb(121, 121, 121);
 }
 
 p {
-    line-height: 1.5em;
-    color: rgb(121, 121, 121);
+	line-height: 1.5em;
+	color: rgb(121, 121, 121);
+}
+
+body {
+	min-height: 100vh;
+	background-color: #121314;
+}
+
+body + div {
+	min-height: 100vh;
 }
 
 ._wrapper {
-    margin: auto;
-    width: 100%;
-    max-width: calc(100% - 32px);
+	margin: auto;
+	width: 100%;
+	max-width: calc(100% - 32px);
 }
-
 
 ._btn {
-    background-color: #202123;
-    border:1px solid #4A4F55;
-    color: white;
+	transition: 250ms;
+	position: relative;
+	background-color: #202123;
+	border: 1px solid #4a4f55;
+	color: white;
+	cursor: pointer;
 }
 
-._btn--rounded{
-    width: 100%;
-    height: 100%;
-    max-width: 33px;
-    max-height: 33px; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 9999px;
+._btn svg {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+._btn--rounded {
+	/* width: 100%; */
+	/* height: 100%; */
+	min-width: 33px;
+	height: 33px;
+	border-radius: 9999px;
+}
+
+._btn--bigger {
+	/* width: 100%; */
+	/* height: 100%; */
+	width: 52px;
+	height: 52px;
+	border-radius: 9999px;
+}
+._btn--bigger svg {
+	/* width: 100%; */
+	/* height: 100%; */
+	min-width: 16px;
+	min-height: 16px;
+	border-radius: 9999px;
 }
 
 ._btn--secondary {
-    background-color: #458FD3;
+	background-color: #458fd3;
+}
+
+._btn--orange {
+	background-color: #c96720;
+	border-color: #c96720;
+}
+
+._recipe-image::before {
+	content: '';
+	position: absolute;
+	height: 80%;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	background: rgb(18, 19, 20);
+	background: linear-gradient(180deg, rgba(18, 19, 20, 0) 0%, rgba(18, 19, 20, 0.9) 100%);
 }

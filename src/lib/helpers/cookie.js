@@ -43,6 +43,20 @@ export function getRecipes(name) {
 }
 
 /**
+ * @param {number} id
+ * 
+ * @return {boolean}
+ */
+export function checkRecipe(id) {
+    let recipes = JSON.parse(getRecipes("recipes"));
+    if (recipes.find((/** @type {number} */ el) => el == id) === undefined) {
+        return true;
+    } else {
+        return false
+    };
+}
+
+/**
  * @param {string} name
  */
 export function eraseCookie(name) {

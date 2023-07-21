@@ -11,14 +11,13 @@
 	/>
 </svelte:head>
 
-<div class="app bg-black">
-	<header>
-		<ul>
-			<li><a href="/recipes">Recipes link</a></li>
-			<li><a href="/about" /></li>
-		</ul>
-	</header>
-	<main>
-		<slot />
-	</main>
-</div>
+<!-- <div class="app min-h-screen bg-black"> -->
+<header>
+	<ul>
+		<li><a href="/">Recipes</a></li>
+		<li><a href="/recipes">Your list</a></li>
+		<li><a href="/about" /></li>
+	</ul>
+</header>
+<slot />
+<!-- </div> -->

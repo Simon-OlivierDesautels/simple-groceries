@@ -7,8 +7,8 @@ export const load = async () => {
 		});
 		return await res.json();
 	};
-	console.log(`${apiUrl}/recipes/complexSearch?number=10`);
 	return {};
+	// If you want actual data from the API
 	// return { recipes: GetRecipes() };
 };
 

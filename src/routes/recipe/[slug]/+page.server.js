@@ -12,13 +12,14 @@ export const load = async ({ params }) => {
 	return { recipe: GetRecipe() };
 };
 
-export const actions = {
-	// requestSiteInfo: async ({ request }) => {
-	// 	const data = await request.formData();
-	// 	const id = data.get('id');
-	// 	const headers = await getApiHeader();
-	// 	const res = await fetch(`${API_URL()}/site_page/${id}/`, { headers: headers });
-	// 	const output = await res.json();
-	// 	return output;
-	// },
-};
+// export const actions = {
+// 	fetchShoppingList: async ({ request }) => {
+// 		const data = await request.formData();
+// 		const recipesList = data.get('recipes');
+// 		console.log(recipesList);
+// 		// const headers = await getApiHeader();
+// 		// const res = await fetch(`${API_URL()}/site_page/${id}/`, { headers: headers });
+// 		// const output = await res.json();
+// 		// return output;
+// 	},
+// };
