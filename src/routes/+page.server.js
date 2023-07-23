@@ -1,4 +1,5 @@
 import { apiKey, apiUrl } from '$env/static/private';
+import { addRecipeToList } from '$lib/helpers/globalActions.js';
 
 export const load = async () => {
 	const GetRecipes = async () => {
@@ -21,4 +22,5 @@ export const actions = {
 	// 	const output = await res.json();
 	// 	return output;
 	// },
+	...addRecipeToList,
 };

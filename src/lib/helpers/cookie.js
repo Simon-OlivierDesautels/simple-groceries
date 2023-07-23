@@ -1,18 +1,10 @@
 import { endOfWeek } from 'date-fns'
-import { addDays } from 'date-fns';
-
+// import { addDays } from 'date-fns';
+// import pako from 'pako';
 /**
  * @param {any} value
  */
 export function setRecipe(value) {
-    let currentRecipes = JSON.parse(getRecipes("recipes"));
-    currentRecipes.push(value)
-
-
-    var recipes = currentRecipes.filter(function (value, index, self) {
-        return self.indexOf(value) === index && self.lastIndexOf(value) === index;
-    });
-
     // Get the current date
     const currentDate = new Date();
 
@@ -22,9 +14,25 @@ export function setRecipe(value) {
     // Calculate the end of the week (Sunday)
     const weekEnd = endOfWeek(currentDate, { weekStartsOn: 1 });
 
-    document.cookie = "recipes" + "=" + (JSON.stringify(recipes) || "") + ";expires=" + weekEnd.toUTCString() + "; path=/";
+    let currentRecipes = [];
 
-    // console.log(recipes);
+    if (localStorage.getItem("recipes") === null) localStorage.setItem("recipes", "[]")
+    if (getRecipes("recipes") === "[]") document.cookie = 'recipes' + '=[];expires=' + weekEnd.toUTCString() + '; path=/';
+
+    currentRecipes = JSON.parse(localStorage.getItem("recipes"));
+
+    const index = currentRecipes.findIndex((obj) => obj.id === value.id);
+    if (index !== -1) {
+        currentRecipes.splice(index, 1);
+        console.log("removed");
+    } else {
+        console.log(currentRecipes);
+        currentRecipes.push(value)
+        console.log(currentRecipes);
+    }
+
+    localStorage.setItem("recipes", JSON.stringify(currentRecipes));
+    document.cookie = 'recipes' + '=' + JSON.stringify(currentRecipes.map((obj) => obj.id)) + ';expires=' + weekEnd.toUTCString() + '; path=/';
 }
 /**
  * @param {string} name
@@ -48,12 +56,12 @@ export function getRecipes(name) {
  * @return {boolean}
  */
 export function checkRecipe(id) {
-    let recipes = JSON.parse(getRecipes("recipes"));
-    if (recipes.find((/** @type {number} */ el) => el == id) === undefined) {
-        return true;
-    } else {
-        return false
-    };
+    if (localStorage.getItem("recipes") === null) localStorage.setItem("recipes", "[]")
+    let recipes = JSON.parse(localStorage.getItem("recipes"));
+
+    const index = recipes.findIndex((obj) => obj.id === id);
+    if (index !== -1) return false;
+    else return true;
 }
 
 /**

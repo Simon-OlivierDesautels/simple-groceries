@@ -4,7 +4,6 @@
 	import { getRecipes } from '$lib/helpers/cookie.js';
 	import { onMount } from 'svelte';
 	import { enhance } from '$app/forms';
-	import { jsPDF } from 'jspdf';
 
 	export let data;
 	let recipes = data.recipes;
@@ -19,9 +18,9 @@
 	console.log(currentUserRecipes);
 </script>
 
-<h1>Recipes</h1>
-
 <div class="_wrapper">
+	<h1 class=" padding pb-1 text-5xl italic text-white">Your recipes</h1>
+	<h2 class="font-normal text-grey-light">Looks yummy</h2>
 	<RecipesList {recipes} />
 </div>
 
@@ -56,11 +55,7 @@
 				acc[aisle].push(item);
 				return acc;
 			}, {});
-
-			const shoppingListPDF = new jsPDF();
-			shoppingListPDF.text('Hello world!', 10, 10);
-			shoppingListPDF.text('Hello world!', 15, 15);
-			shoppingListPDF.save('shoppingList.pdf');
+			console.log(organizedIngredientsByAisle);
 		};
 	}}
 >

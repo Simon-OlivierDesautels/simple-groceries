@@ -37,6 +37,8 @@
 	"type": "module",
 	"dependencies": {
 		"date-fns": "^2.30.0",
-		"jspdf": "^2.5.1"
+		"jspdf": "^2.5.1",
+		"pako": "^2.1.0",
+		"svelte-collapsible": "^0.2.2"
 	}
 }

@@ -1,4 +1,6 @@
 import { apiKey, apiUrl } from '$env/static/private';
+import { getRecipes } from '$lib/helpers/cookie';
+import { addRecipeToList } from '$lib/helpers/globalActions.js';
 
 const GetRecipes = async (recipes) => {
 	const res = await fetch(`${apiUrl}/recipes/informationBulk?ids=${recipes}`, {
@@ -17,6 +19,7 @@ export const load = async ({ params, cookies }) => {
 
 
 	// console.log(`${apiUrl}/recipes/complexSearch?number=10`);
+	// console.log(getRecipes()); 
 	return { recipes: GetRecipes(recipes) };
 };
 
@@ -27,4 +30,5 @@ export const actions = {
 
 		return await GetRecipes(recipesList);
 	},
+	...addRecipeToList,
 };
