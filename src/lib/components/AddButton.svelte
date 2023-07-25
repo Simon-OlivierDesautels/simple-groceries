@@ -36,7 +36,7 @@
 		};
 	}}
 >
-	<button class="_btn {classes} {!canAdd ? '_btn--orange' : ''}" on:click={() => {}}>
+	<button class="_btn {classes} h-10 w-10 {!canAdd ? '_btn--orange' : ''}" on:click={() => {}}>
 		{#if isLoading}
 			<div class="lds-ellipsis {isLoading ? 'ghost' : ''}">
 				<div />

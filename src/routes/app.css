@@ -21,13 +21,20 @@ p {
 	color: rgb(121, 121, 121);
 }
 
+p,
+span,
+a {
+	font-family: 'Inter', sans-serif;
+}
+
 body {
 	min-height: 100vh;
 	background-color: #121314;
 }
 
-body + div {
-	min-height: 100vh;
+header {
+	background: rgb(18, 19, 20);
+	background: linear-gradient(0deg, rgba(18, 19, 20, 0) 0%, rgba(18, 19, 20, 1) 80%);
 }
 
 ._wrapper {
@@ -53,23 +60,17 @@ body + div {
 }
 
 ._btn--rounded {
-	/* width: 100%; */
-	/* height: 100%; */
-	min-width: 40px;
-	height: 40px;
+	/* min-width: 40px; */
+	/* height: 40px; */
 	border-radius: 9999px;
 }
 
 ._btn--bigger {
-	/* width: 100%; */
-	/* height: 100%; */
-	width: 52px;
-	height: 52px;
+	/* width: 52px; */
+	/* height: 52px; */
 	border-radius: 9999px;
 }
 ._btn--bigger svg {
-	/* width: 100%; */
-	/* height: 100%; */
 	min-width: 16px;
 	min-height: 16px;
 	border-radius: 9999px;
@@ -95,4 +96,109 @@ body + div {
 	background: linear-gradient(180deg, rgba(18, 19, 20, 0) 0%, rgba(18, 19, 20, 0.9) 100%);
 }
 
+._recipe-item p {
+	font-family: 'Inria Serif', serif;
+}
 
+._card-collapse {
+	border: 1px solid #383a3e;
+}
+
+._card-collapse ._title {
+	font-family: 'Inria Serif', serif;
+}
+
+._ingredient-counter {
+	min-width: 40px;
+}
+
+input[type='checkbox'] {
+	visibility: hidden;
+}
+
+.checkbox {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 25px;
+	width: 25px;
+	background-color: red;
+}
+/* Creating a custom checkbox
+        based on demand */
+.checkbox {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	height: 20px;
+	width: 20px;
+	border-radius: 4px;
+	background-color: #202123;
+	border: 1px solid #4a4f55;
+	transform: translateY(-50%);
+	transition: 250ms;
+}
+
+/* Specify the background color to be
+        shown when hovering over checkbox */
+.main:hover input ~ .checkbox {
+	/* background-color: yellow; */
+}
+
+/* Specify the background color to be
+        shown when checkbox is active */
+.main input:active ~ .checkbox {
+	/* background-color: red; */
+}
+
+/* Specify the background color to be
+        shown when checkbox is checked */
+.main input:checked ~ .checkbox {
+	background-color: #c96720;
+	border: 1px solid #c96720;
+}
+
+/* Checkmark to be shown in checkbox */
+/* It is not be shown when not checked */
+.checkbox:after {
+	content: '';
+	position: absolute;
+	/* display: none; */
+	opacity: 0;
+}
+
+/* Display checkmark when checked */
+.main input:checked ~ .checkbox:after {
+	opacity: 1;
+}
+
+/* Styling the checkmark using webkit */
+/* Rotated the rectangle by 45 degree and 
+        showing only two border to make it look
+        like a tickmark */
+.main .checkbox:after {
+	transition: 250ms;
+	opacity: 0;
+	left: 25%;
+	bottom: -10%;
+	width: 6px;
+	height: 12px;
+	border: solid white;
+	border-width: 0 2px 2px 0;
+	-webkit-transform: rotate(45deg) translate(-50%, -50%);
+	-ms-transform: rotate(45deg) translate(-50%, -50%);
+	transform: rotate(45deg) translate(-50%, -50%);
+}
+
+.main {
+	position: relative;
+	padding-left: 30px;
+	cursor: pointer;
+	font-size: 20px;
+	display: flex;
+	align-items: center;
+}
+
+._card-collapse .card-header {
+	width: 100%;
+}

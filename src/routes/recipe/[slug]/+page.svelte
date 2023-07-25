@@ -60,11 +60,11 @@
 			<a
 				href={recipe.sourceUrl}
 				target="_blank"
-				class="_btn _btn--bigger inline-block w-full text-center"
+				class="_btn _btn--bigger inline-block h-14 w-14 text-center"
 			>
 				<IconEarth />
 			</a>
-			<AddButton recipeId={recipe.id} classes={'_btn--bigger'} />
+			<AddButton recipeId={recipe.id} classes={'!w-14 !h-14 _btn--bigger _btn--rounded'} />
 		</div>
 	</div>
 </div>
