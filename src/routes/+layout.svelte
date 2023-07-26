@@ -2,11 +2,18 @@
 	import './app.css';
 	import './animations.css';
 	import ShoppingList from '$lib/components/ShoppingList.svelte';
+	import { onMount } from 'svelte';
+	import { userRecipes } from '$lib/stores/user_recipes.js';
 
 	let isOpen = false;
 	let isShoppingListOpen = false;
 	let toggleMenu = () => (isOpen = !isOpen);
 	let toggleShoppingList = () => (isShoppingListOpen = !isShoppingListOpen);
+
+	onMount(() => {
+		userRecipes.set(JSON.parse(localStorage.getItem('recipes')));
+		console.log('did it: ', $userRecipes);
+	});
 </script>
 
 <svelte:head>

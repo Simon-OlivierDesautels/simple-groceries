@@ -1,10 +1,11 @@
 <script>
 	import { setRecipe, checkRecipe } from '$lib/helpers/cookie.js';
 	import { userRecipes } from '$lib/stores/user_recipes.js';
-	import { onMount } from 'svelte';
 	import Add from '$lib/images/icon-add.svelte';
 	import Remove from '$lib/images/icon-remove.svelte';
+	import { onMount } from 'svelte';
 	import { enhance } from '$app/forms';
+	import { formatIngredients } from '$lib/helpers/formating';
 
 	/**
 	 * @type {number}
@@ -30,7 +31,11 @@
 			isLoading = false;
 			let recipe = result.data;
 
-			setRecipe({ id: recipe.id, name: recipe.title, ingredients: recipe.extendedIngredients });
+			setRecipe({
+				id: recipe.id,
+				title: recipe.title,
+				ingredients: formatIngredients(recipe.extendedIngredients)
+			});
 			userRecipes.set(JSON.parse(localStorage.getItem('recipes')));
 			canAdd = checkRecipe(recipeId);
 		};

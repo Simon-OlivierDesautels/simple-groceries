@@ -1,19 +1,33 @@
 <script>
 	// @ts-nocheck
 	import { CollapsibleCard } from 'svelte-collapsible';
+	import { userRecipes } from '$lib/stores/user_recipes.js';
+	export let recipe;
 	let isOpen = false;
-	let recipe;
+	let x = (ingredient) => {
+		// console.log(console.log('tt'));
+		console.log($userRecipes);
+		console.log(recipe['ingredients'].find((x) => x.id === ingredient.id)['completed']);
+
+		recipe['ingredients'].find((x) => x.id === ingredient.id)['completed'] = !$userRecipes
+			.find((x) => x.id === recipe.id)
+			['ingredients'].find((x) => x.id === ingredient.id)['completed'];
+		console.log(recipe['ingredients'].find((x) => x.id === ingredient.id)['completed']);
+		// !$userRecipes[`${recipe.id}`]['ingredients'][`${ingredient.id}`]['completed'];
+	};
 </script>
 
-<div class="_card-collapse rounded-xl bg-black-light ">
+<div class="_card-collapse rounded-xl bg-black-light">
 	<CollapsibleCard bind:open={isOpen}>
 		<div slot="header" class="flex cursor-pointer items-center justify-between px-6 py-4 ">
-			<span class="_title text-2xl font-bold italic text-white">Spaghetti</span
+			<span
+				class="_title w-full overflow-hidden text-ellipsis whitespace-nowrap text-left text-xl font-bold italic text-white"
+				>{recipe.title}</span
 			>
 
 			<div class="flex items-center gap-3">
 				<div class="_ingredient-counter flex rounded-full bg-black py-1 px-4">
-					<span class="my-auto text-sm text-grey-light">2/13</span>
+					<span class="my-auto text-sm text-grey-light">x/{recipe.ingredients.length}</span>
 				</div>
 				<div class="{isOpen ? 'rotate-180' : 'rotate-0'} transition-all duration-150">
 					<svg
@@ -33,27 +47,22 @@
 		</div>
 
 		<ul slot="body" class="flex flex-col gap-4 px-6 py-4">
-			<li>
-				<label class="main py-2">
-					<span class="text-base">1 handful curry leaves</span>
-					<input type="checkbox" />
-					<span class="checkbox" />
-				</label>
-			</li>
-			<li>
-				<label class="main py-2">
-					<span class="text-base">1 handful curry leaves</span>
-					<input type="checkbox" />
-					<span class="checkbox" />
-				</label>
-			</li>
-			<li>
-				<label class="main py-2">
-					<span class="text-base">1 handful curry leaves</span>
-					<input type="checkbox" />
-					<span class="checkbox" />
-				</label>
-			</li>
+			<!-- {#each Object.keys(recipe.ingredients) as key} -->
+			{#each recipe.ingredients as ingredient}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<li
+					on:click={() => {
+						x(ingredient);
+						console.log('tt');
+					}}
+				>
+					<label class="main py-2 {false ? 'completed' : 'not-completed'}" on:click|preventDefault>
+						<span class="text-base">{ingredient.name}</span>
+						<input type="checkbox" on:click|preventDefault />
+						<span class="checkbox" />
+					</label>
+				</li>
+			{/each}
 		</ul>
 	</CollapsibleCard>
 </div>

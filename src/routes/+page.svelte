@@ -5,11 +5,6 @@
 
 	export let data;
 	let recipes = dummyRecipes.results;
-	let currentUserRecipes;
-
-	userRecipes.subscribe((value) => {
-		currentUserRecipes = value;
-	});
 </script>
 
 <div class="_wrapper">

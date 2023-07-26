@@ -6,15 +6,8 @@
 	 * @type {boolean}
 	 */
 	let isShoppingListOpen;
-	let currentUserRecipes;
-
-	userRecipes.subscribe((value) => {
-		currentUserRecipes = value;
-	});
-	// userRecipes.update(['ssss']);
 </script>
 
-<!-- {userRecipes} -->
 <div class="{!isShoppingListOpen ? 'flex' : 'hidden'} h-ful w-full pt-16">
 	<div class="_wrapper !my-0">
 		<h3 class="text-3xl italic text-white">Shopping list</h3>
@@ -42,10 +35,9 @@
 			</div>
 
 			<div class="flex flex-col gap-3">
-				<CollapsableRecipe />
-				<CollapsableRecipe />
-				<CollapsableRecipe />
-				<!-- {#each currentUserRecipes as recipe}{/each} -->
+				{#each $userRecipes as recipe}
+					<CollapsableRecipe bind:recipe />
+				{/each}
 			</div>
 		</div>
 	</div>
