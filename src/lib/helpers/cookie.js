@@ -34,6 +34,20 @@ export function setRecipe(value) {
     localStorage.setItem("recipes", JSON.stringify(currentRecipes));
     document.cookie = 'recipes' + '=' + JSON.stringify(currentRecipes.map((obj) => obj.id)) + ';expires=' + weekEnd.toUTCString() + '; path=/';
 }
+
+
+/**
+ * @param {any} value
+ */
+export function setIngredientCompletion(recipeId, ingredientId, state) {
+    let currentRecipes = JSON.parse(localStorage.getItem("recipes"));
+
+
+    currentRecipes.find((x) => x.id === recipeId).ingredients.find((x) => x.id === ingredientId)["completed"] = state;
+    console.log(currentRecipes.find((x) => x.id === recipeId).ingredients.find((x) => x.id === ingredientId)["completed"]);
+    localStorage.setItem("recipes", JSON.stringify(currentRecipes));
+}
+
 /**
  * @param {string} name
  * 

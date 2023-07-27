@@ -1,18 +1,19 @@
 <script>
 	// @ts-nocheck
 	import { CollapsibleCard } from 'svelte-collapsible';
-	import { userRecipes } from '$lib/stores/user_recipes.js';
+	import IngredientCheckbox from '$lib/components/IngredientCheckbox.svelte';
+	import { setIngredientCompletion } from '$lib/helpers/cookie';
 	export let recipe;
 	let isOpen = false;
 	let x = (ingredient) => {
 		// console.log(console.log('tt'));
-		console.log($userRecipes);
-		console.log(recipe['ingredients'].find((x) => x.id === ingredient.id)['completed']);
+		// console.log(recipe['ingredients'].find((x) => x.id === ingredient.id)['completed']);
 
-		recipe['ingredients'].find((x) => x.id === ingredient.id)['completed'] = !$userRecipes
-			.find((x) => x.id === recipe.id)
-			['ingredients'].find((x) => x.id === ingredient.id)['completed'];
-		console.log(recipe['ingredients'].find((x) => x.id === ingredient.id)['completed']);
+		let ingredientState = recipe['ingredients'].find((x) => x.id === ingredient.id)['completed'];
+		recipe['ingredients'].find((x) => x.id === ingredient.id)['completed'] = !ingredientState;
+		setIngredientCompletion(recipe.id, ingredient.id, !ingredientState);
+		recipe['ingredients'] = recipe['ingredients'];
+		// console.log(recipe['ingredients'].find((x) => x.id === ingredient.id)['completed']);
 		// !$userRecipes[`${recipe.id}`]['ingredients'][`${ingredient.id}`]['completed'];
 	};
 </script>
@@ -27,7 +28,7 @@
 
 			<div class="flex items-center gap-3">
 				<div class="_ingredient-counter flex rounded-full bg-black py-1 px-4">
-					<span class="my-auto text-sm text-grey-light">x/{recipe.ingredients.length}</span>
+					<span class="my-auto text-sm text-grey-light">{''}/{recipe.ingredients.length}</span>
 				</div>
 				<div class="{isOpen ? 'rotate-180' : 'rotate-0'} transition-all duration-150">
 					<svg
@@ -53,14 +54,9 @@
 				<li
 					on:click={() => {
 						x(ingredient);
-						console.log('tt');
 					}}
 				>
-					<label class="main py-2 {false ? 'completed' : 'not-completed'}" on:click|preventDefault>
-						<span class="text-base">{ingredient.name}</span>
-						<input type="checkbox" on:click|preventDefault />
-						<span class="checkbox" />
-					</label>
+					<IngredientCheckbox bind:isCompleted={ingredient.completed} bind:ingredient />
 				</li>
 			{/each}
 		</ul>
