@@ -85,6 +85,10 @@ header {
 	border-color: #c96720;
 }
 
+._btn--orange span {
+	color: white;
+}
+
 ._recipe-image::before {
 	content: '';
 	position: absolute;
@@ -109,7 +113,7 @@ header {
 }
 
 ._ingredient-counter {
-	min-width: 60px;
+	min-width: 70px;
 }
 
 input[type='checkbox'] {
@@ -199,6 +203,18 @@ input[type='checkbox'] {
 	align-items: center;
 }
 
+.main._completed span {
+	text-decoration: dashed;
+	color: rgb(74 79 85) !important;
+	text-decoration-line: line-through;
+}
+
 ._card-collapse .card-header {
 	width: 100%;
+}
+._noscroll {
+	overflow-y: hidden;
+	/* height: 100vh; */
+	/* position: fixed; */
+	/* overflow-y: scroll; */
 }

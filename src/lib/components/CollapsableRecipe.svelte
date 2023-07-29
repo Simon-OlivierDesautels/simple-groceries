@@ -2,33 +2,51 @@
 	// @ts-nocheck
 	import { CollapsibleCard } from 'svelte-collapsible';
 	import IngredientCheckbox from '$lib/components/IngredientCheckbox.svelte';
-	import { setIngredientCompletion } from '$lib/helpers/cookie';
+	import { onMount } from 'svelte';
+	import { flip } from 'svelte/animate';
+	import { send, receive } from '$lib/helpers/transitions.js';
+	import RecipesList from './RecipesList.svelte';
 	export let recipe;
+	let isRecipeCompleted;
 	let isOpen = false;
-	let x = (ingredient) => {
-		// console.log(console.log('tt'));
-		// console.log(recipe['ingredients'].find((x) => x.id === ingredient.id)['completed']);
 
-		let ingredientState = recipe['ingredients'].find((x) => x.id === ingredient.id)['completed'];
-		recipe['ingredients'].find((x) => x.id === ingredient.id)['completed'] = !ingredientState;
-		setIngredientCompletion(recipe.id, ingredient.id, !ingredientState);
-		recipe['ingredients'] = recipe['ingredients'];
-		// console.log(recipe['ingredients'].find((x) => x.id === ingredient.id)['completed']);
-		// !$userRecipes[`${recipe.id}`]['ingredients'][`${ingredient.id}`]['completed'];
+	let verifyRecipeCompletion = () => {
+		let numOfCompletedIngredient = recipe.ingredients.filter(function (entry) {
+			return entry.completed === true;
+		}).length;
+		numOfCompletedIngredient === recipe.ingredients.length
+			? (isRecipeCompleted = true)
+			: (isRecipeCompleted = false);
+
+		if (isRecipeCompleted) {
+			isOpen = false;
+		}
 	};
+
+	onMount(() => {
+		verifyRecipeCompletion();
+	});
 </script>
 
-<div class="_card-collapse rounded-xl bg-black-light">
+<div class="_card-collapse  rounded-xl bg-black-light">
 	<CollapsibleCard bind:open={isOpen}>
 		<div slot="header" class="flex cursor-pointer items-center justify-between px-6 py-4 ">
 			<span
-				class="_title w-full overflow-hidden text-ellipsis whitespace-nowrap text-left text-xl font-bold italic text-white"
-				>{recipe.title}</span
+				class="_title  w-full overflow-hidden  text-ellipsis whitespace-nowrap pr-2 text-left text-xl font-bold italic text-white {isRecipeCompleted
+					? '!text-grey line-through'
+					: ''}">{recipe.title}</span
 			>
 
 			<div class="flex items-center gap-3">
-				<div class="_ingredient-counter flex rounded-full bg-black py-1 px-4">
-					<span class="my-auto text-sm text-grey-light">{''}/{recipe.ingredients.length}</span>
+				<div
+					class="_ingredient-counter flex items-center justify-center rounded-full bg-black py-1 px-4 transition-all duration-300 
+					{isRecipeCompleted ? '_btn--orange' : ''}"
+				>
+					<span class=" my-auto text-sm text-grey-light "
+						>{recipe.ingredients.filter(function (entry) {
+							return entry.completed === true;
+						}).length}/{recipe.ingredients.length}</span
+					>
 				</div>
 				<div class="{isOpen ? 'rotate-180' : 'rotate-0'} transition-all duration-150">
 					<svg
@@ -49,16 +67,38 @@
 
 		<ul slot="body" class="flex flex-col gap-4 px-6 py-4">
 			<!-- {#each Object.keys(recipe.ingredients) as key} -->
-			{#each recipe.ingredients as ingredient}
+			{#each recipe.ingredients.filter((t) => !t.completed) as ingredient, index (ingredient)}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<!-- svelte-ignore missing-declaration -->
 				<li
 					on:click={() => {
-						x(ingredient);
+						verifyRecipeCompletion();
 					}}
+					in:receive={{ key: ingredient.id }}
+					out:send={{ key: ingredient.id }}
+					animate:flip
 				>
-					<IngredientCheckbox bind:isCompleted={ingredient.completed} bind:ingredient />
+					<IngredientCheckbox bind:isCompleted={ingredient.completed} bind:recipe bind:ingredient />
+				</li>
+			{/each}
+
+			{#each recipe.ingredients.filter((t) => t.completed) as ingredient, index (ingredient)}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<!-- svelte-ignore missing-declaration -->
+				<li
+					on:click={() => {
+						verifyRecipeCompletion();
+					}}
+					in:receive={{ key: ingredient.id }}
+					out:send={{ key: ingredient.id }}
+					animate:flip
+				>
+					<IngredientCheckbox bind:isCompleted={ingredient.completed} bind:recipe bind:ingredient />
 				</li>
 			{/each}
 		</ul>
+		<a href="recipe/{recipe.id}" target="_blank" rel="noopener noreferrer">
+			<span>See details</span>
+		</a>
 	</CollapsibleCard>
 </div>

@@ -4,11 +4,17 @@
 	import ShoppingList from '$lib/components/ShoppingList.svelte';
 	import { onMount } from 'svelte';
 	import { userRecipes } from '$lib/stores/user_recipes.js';
+	import { browser } from '$app/environment';
 
 	let isOpen = false;
 	let isShoppingListOpen = false;
 	let toggleMenu = () => (isOpen = !isOpen);
 	let toggleShoppingList = () => (isShoppingListOpen = !isShoppingListOpen);
+
+	$: if (browser) {
+		document.body.classList.toggle('_noscroll', isOpen);
+		console.log('here');
+	}
 
 	onMount(() => {
 		userRecipes.set(JSON.parse(localStorage.getItem('recipes')));
@@ -49,11 +55,11 @@
 	</div>
 </header>
 <div
-	class="fixed top-0 left-0 z-40 h-screen w-screen bg-black bg-opacity-75 backdrop-blur-md {!isOpen
+	class="fixed top-0 left-0 z-40 h-screen w-screen overflow-y-scroll bg-black bg-opacity-75 backdrop-blur-md {isOpen
 		? 'flex'
 		: 'hidden'}"
 >
-	<ul class="_wrapper items-center {isOpen ? 'flex' : 'hidden'} flex-col gap-8">
+	<ul class="_wrapper items-center {!isOpen ? 'flex' : 'hidden'} flex-col gap-8">
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<li
 			class="text-4xl text-white"

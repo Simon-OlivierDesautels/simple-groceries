@@ -44,7 +44,7 @@ export function setIngredientCompletion(recipeId, ingredientId, state) {
 
 
     currentRecipes.find((x) => x.id === recipeId).ingredients.find((x) => x.id === ingredientId)["completed"] = state;
-    console.log(currentRecipes.find((x) => x.id === recipeId).ingredients.find((x) => x.id === ingredientId)["completed"]);
+    // console.log(currentRecipes.find((x) => x.id === recipeId).ingredients.find((x) => x.id === ingredientId)["completed"]);
     localStorage.setItem("recipes", JSON.stringify(currentRecipes));
 }
 
